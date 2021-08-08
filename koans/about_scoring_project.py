@@ -31,10 +31,24 @@ from runner.koan import *
 # More scoring examples are given in the tests below:
 #
 # Your goal is to write the score method.
+import collections
 
 def score(dice):
     # You need to write this method
-    pass
+    counter = collections.Counter(dice)
+    score = 0
+    score += score_ones(counter[1])
+    score += score_fives(counter[5])
+    for i in [2, 3, 4, 6]:
+        score += (counter[i] // 3) * i * 100
+    return score
+
+def score_ones(count):
+    return (count // 3) * 1000 + (count % 3) * 100
+
+def score_fives(count):
+    return (count // 3) * 500 + (count % 3) * 50
+
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
